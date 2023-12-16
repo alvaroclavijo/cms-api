@@ -16,17 +16,21 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public Page<Product> getProducts(String title, int page, int size) {
+    public Page<Product> getProducts(String title, Double minPrice, Double maxPrice, int page, int size) {
         PageRequest pageable = PageRequest.of(page, size);
-        Specification<Product> specification = buildSpecification(title);
+        Specification<Product> specification = buildSpecification(title, minPrice, maxPrice);
         return productRepository.findAll(specification, pageable);
     }
 
-    private Specification<Product> buildSpecification(String title) {
+    private Specification<Product> buildSpecification(String title, Double minPrice, Double maxPrice) {
         Specification<Product> specification = Specification.where(null);
 
         if (title != null && !title.isEmpty()) {
             specification = specification.and(ProductSpecifications.titleContains(title));
+        }
+
+        if (minPrice != null && maxPrice != null) {
+            specification = specification.and(ProductSpecifications.priceBetween(minPrice, maxPrice));
         }
 
         return specification;

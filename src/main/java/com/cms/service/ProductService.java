@@ -4,5 +4,5 @@ import com.cms.model.Product;
 import org.springframework.data.domain.Page;
 
 public interface ProductService {
-    Page<Product> getProducts(String title, int page, int size);
+    Page<Product> getProducts(String title, Double minPrice, Double maxPrice, int page, int size);
 }

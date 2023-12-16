@@ -17,9 +17,11 @@ public class ProductController {
     @GetMapping
     public Page<Product> getProducts(
             @RequestParam(required = false) String title,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
 
-        return productService.getProducts(title, page, size);
+        return productService.getProducts(title, minPrice, maxPrice, page, size);
     }
 }
