@@ -33,6 +33,14 @@ public class ProductServiceImpl implements ProductService {
             specification = specification.and(ProductSpecifications.priceBetween(minPrice, maxPrice));
         }
 
+        if (minPrice != null) {
+            specification = specification.and(ProductSpecifications.priceGreaterThanOrEqual(minPrice));
+        }
+
+        if (maxPrice != null) {
+            specification = specification.and(ProductSpecifications.priceLessThanOrEqual(maxPrice));
+        }
+
         return specification;
     }
 }
